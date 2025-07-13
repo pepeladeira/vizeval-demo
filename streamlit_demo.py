@@ -1,6 +1,6 @@
 """
-Interface Web Interativa - Agente Médico Vizeval
-Demo do Hackathon Adapta
+Interface Web Interativa - Agente Médico Unimed
+Demo do Hackathon Adapta - Avaliação Inteligente com Vizeval
 """
 
 import streamlit as st
@@ -11,11 +11,126 @@ from dotenv import load_dotenv
 
 # Configuração da página
 st.set_page_config(
-    page_title="Agente Médico Vizeval",
+    page_title="Agente Médico Unimed",
     page_icon="🏥",
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+# CSS personalizado para tema Unimed
+st.markdown("""
+<style>
+    /* Tema principal Unimed */
+    .main > div {
+        background-color: #f8f9fa;
+    }
+    
+    /* Header customizado */
+    .unimed-header {
+        background: linear-gradient(135deg, #00a651 0%, #7cc142 100%);
+        padding: 2rem;
+        border-radius: 10px;
+        margin-bottom: 2rem;
+        color: white;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .unimed-header h1 {
+        color: white !important;
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .unimed-header p {
+        color: #e8f5e8;
+        font-size: 1.1rem;
+        margin-bottom: 0;
+    }
+    
+    /* Botões com tema Unimed */
+    .stButton > button {
+        background-color: #00a651;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 0.5rem 1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .stButton > button:hover {
+        background-color: #008a44;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 166, 81, 0.3);
+    }
+    
+    /* Métricas personalizadas */
+    .metric-container {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        border-left: 4px solid #00a651;
+        margin: 1rem 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Sidebar com tema Unimed */
+    .css-1d391kg {
+        background-color: #f0f8f0;
+    }
+    
+    /* Tabs com tema Unimed */
+    .stTabs [data-baseweb="tab-list"] {
+        background-color: #e8f5e8;
+        border-radius: 10px;
+        padding: 0.5rem;
+    }
+    
+    .stTabs [data-baseweb="tab"] {
+        background-color: transparent;
+        border-radius: 8px;
+        color: #00a651;
+        font-weight: 500;
+    }
+    
+    .stTabs [data-baseweb="tab"][aria-selected="true"] {
+        background-color: #00a651;
+        color: white;
+    }
+    
+    /* Cards de informação */
+    .info-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        border: 1px solid #e8f5e8;
+        margin: 1rem 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    
+    /* Logo placeholder */
+    .logo-placeholder {
+        background: white;
+        border: 2px dashed #00a651;
+        border-radius: 10px;
+        padding: 1rem;
+        text-align: center;
+        color: #00a651;
+        margin-bottom: 1rem;
+    }
+    
+    /* Footer */
+    .footer {
+        background: #f0f8f0;
+        padding: 2rem;
+        border-radius: 10px;
+        margin-top: 2rem;
+        text-align: center;
+        color: #00a651;
+    }
+</style>
+""", unsafe_allow_html=True)
 
 # Carregar variáveis de ambiente
 load_dotenv()
@@ -55,71 +170,98 @@ def display_metrics(results):
         col1, col2, col3, col4 = st.columns(4)
         
         with col1:
+            st.markdown('<div class="metric-container">', unsafe_allow_html=True)
             st.metric(
                 label="Score Final",
                 value=f"{metrics['final_score']:.3f}",
                 delta="Aprovado" if metrics['passed_threshold'] else "Reprovado"
             )
+            st.markdown('</div>', unsafe_allow_html=True)
         
         with col2:
+            st.markdown('<div class="metric-container">', unsafe_allow_html=True)
             st.metric(
                 label="Tentativas",
                 value=metrics['total_attempts']
             )
+            st.markdown('</div>', unsafe_allow_html=True)
         
         with col3:
+            st.markdown('<div class="metric-container">', unsafe_allow_html=True)
             st.metric(
                 label="Melhor Score",
                 value=f"{metrics['best_score']:.3f}" if metrics['best_score'] else "N/A"
             )
+            st.markdown('</div>', unsafe_allow_html=True)
         
         with col4:
+            st.markdown('<div class="metric-container">', unsafe_allow_html=True)
             status = "✅ Aprovado" if metrics['passed_threshold'] else "❌ Reprovado"
             st.metric(
                 label="Status",
                 value=status
             )
+            st.markdown('</div>', unsafe_allow_html=True)
 
 def main():
     # Inicializar estado
     init_session_state()
     
-    # Header
-    st.title("🏥 Agente Médico Vizeval")
-    st.markdown("**Demo do Hackathon Adapta** - Avaliação Inteligente de LLMs na Saúde")
+    # Header customizado da Unimed
+    st.markdown("""
+    <div class="unimed-header">
+        <div class="logo-placeholder">
+            <h3>🏥 UNIMED</h3>
+            <p>Cooperativa de Trabalho Médico</p>
+        </div>
+        <h1>Agente Médico Inteligente</h1>
+        <p>Powered by Vizeval AI - Avaliação Inteligente de Diagnósticos</p>
+    </div>
+    """, unsafe_allow_html=True)
     
     # Sidebar para configurações
     with st.sidebar:
-        st.header("⚙️ Configurações")
+        st.markdown("### ⚙️ Configurações do Sistema")
+        
+        # Logo da Unimed na sidebar
+        st.markdown("""
+        <div class="logo-placeholder">
+            <h4>🏥 UNIMED</h4>
+            <small>Sistema de Diagnóstico IA</small>
+        </div>
+        """, unsafe_allow_html=True)
         
         # Status da API
-        st.subheader("🔗 Status da API")
-        vizeval_url = st.text_input("URL Vizeval", value="http://localhost:8000")
+        st.markdown("#### 🔗 Conexão Vizeval")
+        vizeval_url = st.text_input("URL do Vizeval", value="http://localhost:8000")
         
-        if st.button("🔄 Conectar Agente"):
-            with st.spinner("Conectando..."):
+        if st.button("🔄 Conectar Sistema"):
+            with st.spinner("Conectando com Vizeval..."):
                 st.session_state.agent = create_agent()
                 if st.session_state.agent:
-                    st.success("✅ Agente conectado com sucesso!")
+                    st.success("✅ Sistema Unimed conectado!")
                 else:
-                    st.error("❌ Falha na conexão")
+                    st.error("❌ Falha na conexão com Vizeval")
         
         # Configurações de avaliação
-        st.subheader("📊 Parâmetros de Avaliação")
-        threshold = st.slider("Threshold Mínimo", 0.0, 1.0, 0.8, 0.05)
+        st.markdown("#### 📊 Parâmetros de Avaliação")
+        threshold = st.slider("Threshold de Qualidade", 0.0, 1.0, 0.8, 0.05)
         max_retries = st.number_input("Máximo de Tentativas", 1, 10, 3)
         
         # Casos de exemplo
-        st.subheader("📋 Casos Pré-definidos")
+        st.markdown("#### 📋 Casos Clínicos")
         sample_cases = create_sample_cases()
         case_names = [f"{case.patient_id} ({case.complexity_level})" for case in sample_cases]
         selected_case_idx = st.selectbox("Selecionar Caso", range(len(case_names)), format_func=lambda x: case_names[x])
     
     # Área principal
-    tab1, tab2, tab3 = st.tabs(["🔍 Análise de Caso", "📊 Resultados", "📈 Histórico"])
+    tab1, tab2, tab3 = st.tabs(["🔍 Análise Clínica", "📊 Resultados", "📈 Histórico"])
     
     with tab1:
-        st.header("🔍 Análise de Caso Médico")
+        st.markdown("## 🔍 Análise de Caso Clínico")
+        
+        # Informações do sistema
+        st.info("🏥 **Sistema Unimed** - Diagnóstico assistido por IA com avaliação de qualidade Vizeval")
         
         # Seletor de modo
         mode = st.radio("Modo de Entrada", ["Caso Pré-definido", "Caso Personalizado"])
@@ -132,26 +274,30 @@ def main():
             col1, col2 = st.columns(2)
             
             with col1:
-                st.subheader("👤 Informações do Paciente")
+                st.markdown('<div class="info-card">', unsafe_allow_html=True)
+                st.markdown("#### 👤 Informações do Paciente")
                 st.write(f"**ID:** {selected_case.patient_id}")
                 st.write(f"**Complexidade:** {selected_case.complexity_level.upper()}")
                 st.write(f"**Histórico Médico:**")
                 st.write(selected_case.medical_history)
+                st.markdown('</div>', unsafe_allow_html=True)
             
             with col2:
-                st.subheader("🩺 Sintomas Apresentados")
+                st.markdown('<div class="info-card">', unsafe_allow_html=True)
+                st.markdown("#### 🩺 Sintomas Apresentados")
                 st.write(selected_case.symptoms)
+                st.markdown('</div>', unsafe_allow_html=True)
             
             case_to_analyze = selected_case
             
         else:
             # Caso personalizado
-            st.subheader("✏️ Criar Caso Personalizado")
+            st.markdown("#### ✏️ Criar Caso Personalizado")
             
             col1, col2 = st.columns(2)
             
             with col1:
-                patient_id = st.text_input("ID do Paciente", value="CUSTOM-001")
+                patient_id = st.text_input("ID do Paciente", value="UNIMED-001")
                 complexity = st.selectbox("Complexidade", ["low", "medium", "high"])
                 medical_history = st.text_area("Histórico Médico", height=100)
             
@@ -167,13 +313,13 @@ def main():
             )
         
         # Botão de análise
-        if st.button("🚀 Analisar Caso Médico", type="primary"):
+        if st.button("🚀 Executar Análise Médica", type="primary"):
             if not st.session_state.agent:
-                st.error("❌ Conecte o agente primeiro na barra lateral")
+                st.error("❌ Conecte o sistema Vizeval primeiro na barra lateral")
             elif not case_to_analyze.symptoms.strip():
                 st.error("❌ Informe os sintomas do paciente")
             else:
-                with st.spinner("🔍 Analisando caso médico..."):
+                with st.spinner("🔍 Analisando caso com sistema Unimed..."):
                     # Atualizar configurações do agente
                     st.session_state.agent.client.set_vizeval_config({
                         "api_key": st.session_state.agent.vizeval_config.api_key,
@@ -181,7 +327,7 @@ def main():
                         "threshold": threshold,
                         "max_retries": max_retries,
                         "base_url": vizeval_url,
-                        "metadata": {"streamlit_demo": True}
+                        "metadata": {"unimed_system": True, "streamlit_demo": True}
                     })
                     
                     # Fazer análise
@@ -191,34 +337,34 @@ def main():
                     st.session_state.analysis_history.append(results)
                     
                     # Exibir resultados
-                    st.success("✅ Análise concluída!")
+                    st.success("✅ Análise Unimed concluída com sucesso!")
                     
                     # Mostrar métricas
-                    st.subheader("📊 Métricas de Qualidade")
+                    st.markdown("### 📊 Métricas de Qualidade Vizeval")
                     display_metrics(results)
                     
                     # Mostrar análise
-                    st.subheader("🏥 Análise Médica")
-                    st.markdown(results["analysis"])
+                    st.markdown("### 🏥 Diagnóstico Médico Unimed")
+                    st.markdown(f'<div class="info-card">{results["analysis"]}</div>', unsafe_allow_html=True)
                     
                     # Feedback da avaliação
                     if "quality_metrics" in results and "feedback" in results["quality_metrics"]:
-                        st.subheader("💬 Feedback da Avaliação Vizeval")
+                        st.markdown("### 💬 Feedback de Qualidade Vizeval")
                         st.info(results["quality_metrics"]["feedback"])
     
     with tab2:
-        st.header("📊 Últimos Resultados")
+        st.markdown("## 📊 Resultados da Análise")
         
         if st.session_state.analysis_history:
             latest_result = st.session_state.analysis_history[-1]
             
             # Métricas principais
-            st.subheader("📈 Métricas de Qualidade")
+            st.markdown("### 📈 Métricas de Qualidade")
             display_metrics(latest_result)
             
             # Histórico de tentativas
             if "attempt_history" in latest_result and len(latest_result["attempt_history"]) > 1:
-                st.subheader("🔄 Histórico de Tentativas")
+                st.markdown("### 🔄 Histórico de Tentativas")
                 
                 attempts_data = []
                 for attempt in latest_result["attempt_history"]:
@@ -231,15 +377,15 @@ def main():
                 st.dataframe(attempts_data, use_container_width=True)
             
             # JSON dos resultados
-            st.subheader("🔧 Dados Técnicos")
-            with st.expander("Ver JSON Completo"):
+            st.markdown("### 🔧 Dados Técnicos")
+            with st.expander("Ver Dados Completos do Vizeval"):
                 st.json(latest_result)
         
         else:
-            st.info("📝 Nenhuma análise realizada ainda. Vá para a aba 'Análise de Caso' para começar.")
+            st.info("📝 Nenhuma análise realizada ainda. Vá para a aba 'Análise Clínica' para começar.")
     
     with tab3:
-        st.header("📈 Histórico de Análises")
+        st.markdown("## 📈 Histórico de Análises")
         
         if st.session_state.analysis_history:
             # Estatísticas gerais
@@ -256,7 +402,7 @@ def main():
                 st.metric("Total de Tentativas", total_attempts)
             
             # Tabela do histórico
-            st.subheader("📋 Todas as Análises")
+            st.markdown("### 📋 Todas as Análises")
             
             history_data = []
             for i, result in enumerate(st.session_state.analysis_history):
@@ -280,8 +426,13 @@ def main():
             st.info("📝 Nenhuma análise no histórico ainda.")
     
     # Footer
-    st.markdown("---")
-    st.markdown("🤖 **Powered by Vizeval SDK** | 🏥 **Hackathon Adapta** | 🚀 **Demo Version 1.0**")
+    st.markdown("""
+    <div class="footer">
+        <h4>🏥 Sistema Unimed de Diagnóstico Inteligente</h4>
+        <p>🤖 <strong>Powered by Vizeval AI</strong> | 🏥 <strong>Hackathon Adapta</strong> | 🚀 <strong>Demo Version 1.0</strong></p>
+        <p><small>Avaliação de qualidade em tempo real com tecnologia Vizeval</small></p>
+    </div>
+    """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main() 
