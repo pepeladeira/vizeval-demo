@@ -99,15 +99,32 @@ st.markdown("""
         color: white;
     }
     
-    /* Cards de informação */
-    .info-card {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 10px;
-        border: 1px solid #e8f5e8;
-        margin: 1rem 0;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    }
+         /* Cards de informação */
+     .info-card {
+         background: white;
+         padding: 1.5rem;
+         border-radius: 10px;
+         border: 1px solid #e8f5e8;
+         margin: 1rem 0;
+         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+     }
+     
+     .info-card h3, .info-card h4 {
+         color: #00a651;
+         margin-bottom: 1rem;
+         font-size: 1.1rem;
+         font-weight: 600;
+     }
+     
+     .info-card p, .info-card div {
+         margin-bottom: 0.5rem;
+         line-height: 1.5;
+         color: #333;
+     }
+     
+     .info-card p:last-child, .info-card div:last-child {
+         margin-bottom: 0;
+     }
     
     /* Logo placeholder */
     .logo-placeholder {
@@ -269,19 +286,23 @@ def main():
         col1, col2 = st.columns(2)
         
         with col1:
-            st.markdown('<div class="info-card">', unsafe_allow_html=True)
-            st.markdown("#### 👤 Informações do Paciente")
-            st.write(f"**ID:** {selected_case.patient_id}")
-            st.write(f"**Complexidade:** {selected_case.complexity_level.upper()}")
-            st.write(f"**Histórico Médico:**")
-            st.write(selected_case.medical_history)
-            st.markdown('</div>', unsafe_allow_html=True)
+            st.markdown(f'''
+            <div class="info-card">
+                <h4>👤 Informações do Paciente</h4>
+                <p><strong>ID:</strong> {selected_case.patient_id}</p>
+                <p><strong>Complexidade:</strong> {selected_case.complexity_level.upper()}</p>
+                <p><strong>Histórico Médico:</strong></p>
+                <p>{selected_case.medical_history}</p>
+            </div>
+            ''', unsafe_allow_html=True)
         
         with col2:
-            st.markdown('<div class="info-card">', unsafe_allow_html=True)
-            st.markdown("#### 🩺 Sintomas Apresentados")
-            st.write(selected_case.symptoms)
-            st.markdown('</div>', unsafe_allow_html=True)
+            st.markdown(f'''
+            <div class="info-card">
+                <h4>🩺 Sintomas Apresentados</h4>
+                <p>{selected_case.symptoms}</p>
+            </div>
+            ''', unsafe_allow_html=True)
         
         case_to_analyze = selected_case
         
@@ -313,8 +334,13 @@ def main():
                     st.success("✅ Análise Unimed concluída com sucesso!")
                     
                     # Mostrar apenas a análise médica
-                    st.markdown("### 🏥 Diagnóstico Médico Unimed")
-                    st.markdown(f'<div class="info-card">{results["analysis"]}</div>', unsafe_allow_html=True)
+                    analysis_text = results["analysis"].replace('\n', '<br>')
+                    st.markdown(f'''
+                    <div class="info-card">
+                        <h4>🏥 Diagnóstico Médico Unimed</h4>
+                        <div style="white-space: pre-wrap; line-height: 1.6;">{analysis_text}</div>
+                    </div>
+                    ''', unsafe_allow_html=True)
                     
                     # Informar sobre métricas na aba Resultados
                     st.info("📊 Para ver as métricas de qualidade e avaliação Vizeval, acesse a aba **Resultados**")
