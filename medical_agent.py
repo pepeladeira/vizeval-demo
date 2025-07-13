@@ -27,7 +27,7 @@ class MedicalCase:
 class MedicalAgent:
     """Agente médico inteligente com avaliação automática via Vizeval"""
     
-    def __init__(self, openai_api_key: str, vizeval_api_key: str, vizeval_base_url: str = "http://localhost:8080"):
+    def __init__(self, openai_api_key: str, vizeval_api_key: str, vizeval_base_url: str = "http://localhost:8000"):
         self.console = Console()
         
         # Configurar Vizeval para usar API local
@@ -189,7 +189,7 @@ def main():
     agent = MedicalAgent(
         openai_api_key=openai_key,
         vizeval_api_key=vizeval_key,
-        vizeval_base_url="http://localhost:8080"
+        vizeval_base_url="http://localhost:8000"
     )
     
     # Casos de exemplo

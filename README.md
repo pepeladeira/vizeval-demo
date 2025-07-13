@@ -52,7 +52,7 @@ cp .env.example .env
 ```env
 OPENAI_API_KEY=sk-your-openai-api-key-here
 VIZEVAL_API_KEY=your-vizeval-api-key-here
-VIZEVAL_BASE_URL=http://localhost:8080
+VIZEVAL_BASE_URL=http://localhost:8000
 ```
 
 ## 🎮 Como Executar
@@ -102,15 +102,15 @@ streamlit run streamlit_demo.py
 
 ## 🔧 Configuração da API Local
 
-Para usar com a API Vizeval local (localhost:8080):
+Para usar com a API Vizeval local (localhost:8000):
 
 1. **Certifique-se de que a API Vizeval está rodando**:
    ```bash
    # No diretório da API Vizeval
-   uvicorn vizeval.main:app --host 0.0.0.0 --port 8080
+   uvicorn vizeval.main:app --host 0.0.0.0 --port 8000
    ```
 
-2. **A demo irá conectar automaticamente** em `http://localhost:8080`
+2. **A demo irá conectar automaticamente** em `http://localhost:8000`
 
 ## 📊 Métricas Exibidas
 

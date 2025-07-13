@@ -40,7 +40,7 @@ def create_agent():
         agent = MedicalAgent(
             openai_api_key=openai_key,
             vizeval_api_key=vizeval_key,
-            vizeval_base_url="http://localhost:8080"
+            vizeval_base_url="http://localhost:8000"
         )
         return agent
     except Exception as e:
@@ -94,7 +94,7 @@ def main():
         
         # Status da API
         st.subheader("🔗 Status da API")
-        vizeval_url = st.text_input("URL Vizeval", value="http://localhost:8080")
+        vizeval_url = st.text_input("URL Vizeval", value="http://localhost:8000")
         
         if st.button("🔄 Conectar Agente"):
             with st.spinner("Conectando..."):
