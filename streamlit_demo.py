@@ -65,15 +65,15 @@ st.markdown("""
         box-shadow: 0 4px 8px rgba(0, 166, 81, 0.3);
     }
     
-    /* Métricas personalizadas */
-    .metric-container {
-        background: white;
-        padding: 1.5rem;
-        border-radius: 10px;
-        border-left: 4px solid #00a651;
-        margin: 1rem 0;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+         /* Métricas personalizadas */
+     .metric-container {
+         background: white;
+         padding: 1.5rem;
+         border-radius: 10px;
+         border-left: 4px solid #00a651;
+         margin: 1rem 0;
+         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+     }
     
     /* Sidebar com tema Unimed */
     .css-1d391kg {
@@ -170,38 +170,41 @@ def display_metrics(results):
         col1, col2, col3, col4 = st.columns(4)
         
         with col1:
-            st.markdown('<div class="metric-container">', unsafe_allow_html=True)
-            st.metric(
-                label="Score Final",
-                value=f"{metrics['final_score']:.3f}",
-                delta="Aprovado" if metrics['passed_threshold'] else "Reprovado"
-            )
-            st.markdown('</div>', unsafe_allow_html=True)
+            delta_text = "Aprovado" if metrics['passed_threshold'] else "Reprovado"
+            delta_color = "#00a651" if metrics['passed_threshold'] else "#ff4444"
+            st.markdown(f'''
+            <div class="metric-container">
+                <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">Score Final</div>
+                <div style="font-size: 2rem; font-weight: bold; color: #000;">{metrics['final_score']:.3f}</div>
+            </div>
+            ''', unsafe_allow_html=True)
         
         with col2:
-            st.markdown('<div class="metric-container">', unsafe_allow_html=True)
-            st.metric(
-                label="Tentativas",
-                value=metrics['total_attempts']
-            )
-            st.markdown('</div>', unsafe_allow_html=True)
+            st.markdown(f'''
+            <div class="metric-container">
+                <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">Tentativas</div>
+                <div style="font-size: 2rem; font-weight: bold; color: #000;">{metrics['total_attempts']}</div>
+            </div>
+            ''', unsafe_allow_html=True)
         
         with col3:
-            st.markdown('<div class="metric-container">', unsafe_allow_html=True)
-            st.metric(
-                label="Melhor Score",
-                value=f"{metrics['best_score']:.3f}" if metrics['best_score'] else "N/A"
-            )
-            st.markdown('</div>', unsafe_allow_html=True)
+            best_score_value = f"{metrics['best_score']:.3f}" if metrics['best_score'] else "N/A"
+            st.markdown(f'''
+            <div class="metric-container">
+                <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">Melhor Score</div>
+                <div style="font-size: 2rem; font-weight: bold; color: #000;">{best_score_value}</div>
+            </div>
+            ''', unsafe_allow_html=True)
         
         with col4:
-            st.markdown('<div class="metric-container">', unsafe_allow_html=True)
             status = "✅ Aprovado" if metrics['passed_threshold'] else "❌ Reprovado"
-            st.metric(
-                label="Status",
-                value=status
-            )
-            st.markdown('</div>', unsafe_allow_html=True)
+            status_color = "#00a651" if metrics['passed_threshold'] else "#ff4444"
+            st.markdown(f'''
+            <div class="metric-container">
+                <div style="font-size: 0.9rem; color: #666; margin-bottom: 0.5rem;">Status</div>
+                <div style="font-size: 1.5rem; font-weight: bold; color: {status_color};">{status}</div>
+            </div>
+            ''', unsafe_allow_html=True)
 
 def main():
     # Inicializar estado
@@ -212,7 +215,6 @@ def main():
     <div class="unimed-header">
         <div class="logo-placeholder">
             <h3>🏥 UNIMED</h3>
-            <p>Cooperativa de Trabalho Médico</p>
         </div>
         <h1>Agente Médico Inteligente</h1>
         <p>Powered by Vizeval AI - Avaliação Inteligente de Diagnósticos</p>
@@ -260,57 +262,28 @@ def main():
     with tab1:
         st.markdown("## 🔍 Análise de Caso Clínico")
         
-        # Informações do sistema
-        st.info("🏥 **Sistema Unimed** - Diagnóstico assistido por IA com avaliação de qualidade Vizeval")
+        # Usar caso selecionado na sidebar
+        selected_case = sample_cases[selected_case_idx]
         
-        # Seletor de modo
-        mode = st.radio("Modo de Entrada", ["Caso Pré-definido", "Caso Personalizado"])
+        # Exibir detalhes do caso
+        col1, col2 = st.columns(2)
         
-        if mode == "Caso Pré-definido":
-            # Usar caso selecionado
-            selected_case = sample_cases[selected_case_idx]
-            
-            # Exibir detalhes do caso
-            col1, col2 = st.columns(2)
-            
-            with col1:
-                st.markdown('<div class="info-card">', unsafe_allow_html=True)
-                st.markdown("#### 👤 Informações do Paciente")
-                st.write(f"**ID:** {selected_case.patient_id}")
-                st.write(f"**Complexidade:** {selected_case.complexity_level.upper()}")
-                st.write(f"**Histórico Médico:**")
-                st.write(selected_case.medical_history)
-                st.markdown('</div>', unsafe_allow_html=True)
-            
-            with col2:
-                st.markdown('<div class="info-card">', unsafe_allow_html=True)
-                st.markdown("#### 🩺 Sintomas Apresentados")
-                st.write(selected_case.symptoms)
-                st.markdown('</div>', unsafe_allow_html=True)
-            
-            case_to_analyze = selected_case
-            
-        else:
-            # Caso personalizado
-            st.markdown("#### ✏️ Criar Caso Personalizado")
-            
-            col1, col2 = st.columns(2)
-            
-            with col1:
-                patient_id = st.text_input("ID do Paciente", value="UNIMED-001")
-                complexity = st.selectbox("Complexidade", ["low", "medium", "high"])
-                medical_history = st.text_area("Histórico Médico", height=100)
-            
-            with col2:
-                symptoms = st.text_area("Sintomas Apresentados", height=150)
-            
-            case_to_analyze = MedicalCase(
-                patient_id=patient_id,
-                symptoms=symptoms,
-                medical_history=medical_history,
-                complexity_level=complexity,
-                expected_focus=[]
-            )
+        with col1:
+            st.markdown('<div class="info-card">', unsafe_allow_html=True)
+            st.markdown("#### 👤 Informações do Paciente")
+            st.write(f"**ID:** {selected_case.patient_id}")
+            st.write(f"**Complexidade:** {selected_case.complexity_level.upper()}")
+            st.write(f"**Histórico Médico:**")
+            st.write(selected_case.medical_history)
+            st.markdown('</div>', unsafe_allow_html=True)
+        
+        with col2:
+            st.markdown('<div class="info-card">', unsafe_allow_html=True)
+            st.markdown("#### 🩺 Sintomas Apresentados")
+            st.write(selected_case.symptoms)
+            st.markdown('</div>', unsafe_allow_html=True)
+        
+        case_to_analyze = selected_case
         
         # Botão de análise
         if st.button("🚀 Executar Análise Médica", type="primary"):
@@ -336,21 +309,15 @@ def main():
                     # Salvar no histórico
                     st.session_state.analysis_history.append(results)
                     
-                    # Exibir resultados
+                    # Exibir apenas o resultado da análise médica
                     st.success("✅ Análise Unimed concluída com sucesso!")
                     
-                    # Mostrar métricas
-                    st.markdown("### 📊 Métricas de Qualidade Vizeval")
-                    display_metrics(results)
-                    
-                    # Mostrar análise
+                    # Mostrar apenas a análise médica
                     st.markdown("### 🏥 Diagnóstico Médico Unimed")
                     st.markdown(f'<div class="info-card">{results["analysis"]}</div>', unsafe_allow_html=True)
                     
-                    # Feedback da avaliação
-                    if "quality_metrics" in results and "feedback" in results["quality_metrics"]:
-                        st.markdown("### 💬 Feedback de Qualidade Vizeval")
-                        st.info(results["quality_metrics"]["feedback"])
+                    # Informar sobre métricas na aba Resultados
+                    st.info("📊 Para ver as métricas de qualidade e avaliação Vizeval, acesse a aba **Resultados**")
     
     with tab2:
         st.markdown("## 📊 Resultados da Análise")
