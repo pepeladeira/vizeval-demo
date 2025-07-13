@@ -137,17 +137,63 @@ st.markdown("""
         margin-bottom: 1rem;
     }
     
-    /* Footer */
-    .footer {
-        background: #f0f8f0;
-        padding: 2rem;
-        border-radius: 10px;
-        margin-top: 2rem;
-        text-align: center;
-        color: #00a651;
-    }
-</style>
-""", unsafe_allow_html=True)
+         /* Footer */
+     .footer {
+         background: #f0f8f0;
+         padding: 2rem;
+         border-radius: 10px;
+         margin-top: 2rem;
+         text-align: center;
+         color: #00a651;
+     }
+     
+     /* Documentos anexados */
+     .document-item {
+         background: #f8f9fa;
+         border: 1px solid #e8f5e8;
+         border-radius: 8px;
+         padding: 0.8rem;
+         margin: 0.5rem 0;
+         display: flex;
+         align-items: center;
+         gap: 0.8rem;
+     }
+     
+     .document-icon {
+         background: #00a651;
+         color: white;
+         border-radius: 6px;
+         padding: 0.5rem;
+         font-size: 1.2rem;
+         min-width: 40px;
+         text-align: center;
+     }
+     
+     .document-info {
+         flex: 1;
+     }
+     
+     .document-name {
+         font-weight: 500;
+         color: #333;
+         margin-bottom: 0.2rem;
+     }
+     
+     .document-size {
+         font-size: 0.8rem;
+         color: #666;
+     }
+     
+     .document-status {
+         background: #00a651;
+         color: white;
+         border-radius: 4px;
+         padding: 0.2rem 0.5rem;
+         font-size: 0.7rem;
+         font-weight: 500;
+     }
+ </style>
+ """, unsafe_allow_html=True)
 
 # Carregar variáveis de ambiente
 load_dotenv()
@@ -305,6 +351,59 @@ def main():
             ''', unsafe_allow_html=True)
         
         case_to_analyze = selected_case
+        
+        # Seção de documentos anexados
+        st.markdown("### 📄 Documentos do Paciente")
+        
+        # Container principal dos documentos
+        with st.container():
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                # Documento 1
+                st.markdown("""
+                <div style="background: white; border: 1px solid #e8f5e8; border-radius: 10px; padding: 1rem; margin: 0.5rem 0; display: flex; align-items: center; gap: 1rem;">
+                    <div style="padding: 0.8rem; font-size: 1.5rem;">📋</div>
+                    <div>
+                        <div style="font-weight: 500; color: #333;">Histórico_Médico_Completo.pdf</div>
+                        <div style="font-size: 0.8rem; color: #666;">2.4 MB • ✓ Processado</div>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                # Documento 2
+                st.markdown("""
+                <div style="background: white; border: 1px solid #e8f5e8; border-radius: 10px; padding: 1rem; margin: 0.5rem 0; display: flex; align-items: center; gap: 1rem;">
+                    <div style="padding: 0.8rem; font-size: 1.5rem;">🩺</div>
+                    <div>
+                        <div style="font-weight: 500; color: #333;">Exames_Laboratoriais_2024.pdf</div>
+                        <div style="font-size: 0.8rem; color: #666;">1.8 MB • ✓ Processado</div>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+            
+            with col2:
+                # Documento 3
+                st.markdown("""
+                <div style="background: white; border: 1px solid #e8f5e8; border-radius: 10px; padding: 1rem; margin: 0.5rem 0; display: flex; align-items: center; gap: 1rem;">
+                    <div style="padding: 0.8rem; font-size: 1.5rem;">🏥</div>
+                    <div>
+                        <div style="font-weight: 500; color: #333;">Relatório_Consulta_Anterior.docx</div>
+                        <div style="font-size: 0.8rem; color: #666;">892 KB • ✓ Processado</div>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                # Documento 4
+                st.markdown("""
+                <div style="background: white; border: 1px solid #e8f5e8; border-radius: 10px; padding: 1rem; margin: 0.5rem 0; display: flex; align-items: center; gap: 1rem;">
+                    <div style="padding: 0.8rem; font-size: 1.5rem;">💊</div>
+                    <div>
+                        <div style="font-weight: 500; color: #333;">Lista_Medicamentos_Atuais.pdf</div>
+                        <div style="font-size: 0.8rem; color: #666;">456 KB • ✓ Processado</div>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
         
         # Botão de análise
         if st.button("🚀 Executar Análise Médica", type="primary"):
