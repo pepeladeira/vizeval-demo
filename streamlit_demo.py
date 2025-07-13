@@ -20,6 +20,23 @@ st.set_page_config(
 # CSS personalizado para tema Unimed
 st.markdown("""
 <style>
+    /* Personalizar header do Streamlit */
+    .stApp > header {
+        background-color: white;
+        border-bottom: 2px solid #00a651;
+    }
+    
+    .stApp > header::before {
+        content: "🏥 UNIMED - Sistema de Diagnóstico Inteligente";
+        position: absolute;
+        top: 50%;
+        left: 2rem;
+        transform: translateY(-50%);
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #00a651;
+    }
+    
     /* Tema principal Unimed */
     .main > div {
         background-color: #f8f9fa;
@@ -65,15 +82,15 @@ st.markdown("""
         box-shadow: 0 4px 8px rgba(0, 166, 81, 0.3);
     }
     
-         /* Métricas personalizadas */
-     .metric-container {
-         background: white;
-         padding: 1.5rem;
-         border-radius: 10px;
-         border-left: 4px solid #00a651;
-         margin: 1rem 0;
-         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-     }
+    /* Métricas personalizadas */
+    .metric-container {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        border-left: 4px solid #00a651;
+        margin: 1rem 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
     
     /* Sidebar com tema Unimed */
     .css-1d391kg {
@@ -99,32 +116,32 @@ st.markdown("""
         color: white;
     }
     
-         /* Cards de informação */
-     .info-card {
-         background: white;
-         padding: 1.5rem;
-         border-radius: 10px;
-         border: 1px solid #e8f5e8;
-         margin: 1rem 0;
-         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-     }
-     
-     .info-card h3, .info-card h4 {
-         color: #00a651;
-         margin-bottom: 1rem;
-         font-size: 1.1rem;
-         font-weight: 600;
-     }
-     
-     .info-card p, .info-card div {
-         margin-bottom: 0.5rem;
-         line-height: 1.5;
-         color: #333;
-     }
-     
-     .info-card p:last-child, .info-card div:last-child {
-         margin-bottom: 0;
-     }
+    /* Cards de informação */
+    .info-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        border: 1px solid #e8f5e8;
+        margin: 1rem 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    
+    .info-card h3, .info-card h4 {
+        color: #00a651;
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+    
+    .info-card p, .info-card div {
+        margin-bottom: 0.5rem;
+        line-height: 1.5;
+        color: #333;
+    }
+    
+    .info-card p:last-child, .info-card div:last-child {
+        margin-bottom: 0;
+    }
     
     /* Logo placeholder */
     .logo-placeholder {
@@ -137,63 +154,63 @@ st.markdown("""
         margin-bottom: 1rem;
     }
     
-         /* Footer */
-     .footer {
-         background: #f0f8f0;
-         padding: 2rem;
-         border-radius: 10px;
-         margin-top: 2rem;
-         text-align: center;
-         color: #00a651;
-     }
-     
-     /* Documentos anexados */
-     .document-item {
-         background: #f8f9fa;
-         border: 1px solid #e8f5e8;
-         border-radius: 8px;
-         padding: 0.8rem;
-         margin: 0.5rem 0;
-         display: flex;
-         align-items: center;
-         gap: 0.8rem;
-     }
-     
-     .document-icon {
-         background: #00a651;
-         color: white;
-         border-radius: 6px;
-         padding: 0.5rem;
-         font-size: 1.2rem;
-         min-width: 40px;
-         text-align: center;
-     }
-     
-     .document-info {
-         flex: 1;
-     }
-     
-     .document-name {
-         font-weight: 500;
-         color: #333;
-         margin-bottom: 0.2rem;
-     }
-     
-     .document-size {
-         font-size: 0.8rem;
-         color: #666;
-     }
-     
-     .document-status {
-         background: #00a651;
-         color: white;
-         border-radius: 4px;
-         padding: 0.2rem 0.5rem;
-         font-size: 0.7rem;
-         font-weight: 500;
-     }
- </style>
- """, unsafe_allow_html=True)
+        /* Footer */
+    .footer {
+        background: #f0f8f0;
+        padding: 2rem;
+        border-radius: 10px;
+        margin-top: 2rem;
+        text-align: center;
+        color: #00a651;
+    }
+    
+    /* Documentos anexados */
+    .document-item {
+        background: #f8f9fa;
+        border: 1px solid #e8f5e8;
+        border-radius: 8px;
+        padding: 0.8rem;
+        margin: 0.5rem 0;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+    }
+    
+    .document-icon {
+        background: #00a651;
+        color: white;
+        border-radius: 6px;
+        padding: 0.5rem;
+        font-size: 1.2rem;
+        min-width: 40px;
+        text-align: center;
+    }
+    
+    .document-info {
+        flex: 1;
+    }
+    
+    .document-name {
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 0.2rem;
+    }
+    
+    .document-size {
+        font-size: 0.8rem;
+        color: #666;
+    }
+    
+    .document-status {
+        background: #00a651;
+        color: white;
+        border-radius: 4px;
+        padding: 0.2rem 0.5rem;
+        font-size: 0.7rem;
+        font-weight: 500;
+    }
+</style>
+""", unsafe_allow_html=True)
 
 # Carregar variáveis de ambiente
 load_dotenv()
@@ -310,8 +327,8 @@ def main():
         
         # Configurações de avaliação
         st.markdown("#### 📊 Parâmetros de Avaliação")
-        threshold = st.slider("Threshold de Qualidade", 0.0, 1.0, 0.8, 0.05)
-        max_retries = st.number_input("Máximo de Tentativas", 1, 10, 3)
+        threshold = st.slider("Threshold de Qualidade", 0.0, 1.0, 0.85, 0.05)
+        max_retries = st.number_input("Máximo de Tentativas", 1, 10, 5)
         
         # Casos de exemplo
         st.markdown("#### 📋 Casos Clínicos")
